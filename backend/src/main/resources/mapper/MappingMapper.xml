@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.backend.backend.mapper.MappingMapper">
+<mapper namespace="com.backend.backend.domain.mapping.mapper.MappingMapper">
 
-    <resultMap id="MappingResultMap" type="com.backend.backend.Entity.Mapping">
+    <resultMap id="MappingResultMap" type="com.backend.backend.domain.mapping.entity.Mapping">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="isActive" column="is_active"/>
@@ -13,7 +13,7 @@
         <result property="note" column="note"/>
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
-        <association property="account" javaType="com.backend.backend.Entity.Account">
+        <association property="account" javaType="com.backend.backend.domain.auth.entity.Account">
             <id property="id" column="account_id"/>
         </association>
     </resultMap>
@@ -43,13 +43,13 @@
         WHERE account_id = #{accountId} AND is_active = true
     </select>
 
-    <insert id="insert" parameterType="com.backend.backend.Entity.Mapping"
+    <insert id="insert" parameterType="com.backend.backend.domain.mapping.entity.Mapping"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO mapping (account_id, name, is_active, change_type, note, created_at, updated_at)
         VALUES (#{account.id}, #{name}, #{isActive}, #{changeType}, #{note}, #{createdAt}, #{updatedAt})
     </insert>
 
-    <update id="update" parameterType="com.backend.backend.Entity.Mapping">
+    <update id="update" parameterType="com.backend.backend.domain.mapping.entity.Mapping">
         UPDATE mapping
         SET account_id = #{account.id},
             name = #{name},

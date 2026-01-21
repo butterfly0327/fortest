@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.backend.backend.mapper.ActionMapper">
+<mapper namespace="com.backend.backend.domain.mapping.mapper.ActionMapper">
 
-    <resultMap id="ActionResultMap" type="com.backend.backend.Entity.Action">
+    <resultMap id="ActionResultMap" type="com.backend.backend.domain.mapping.entity.Action">
         <id property="id" column="id"/>
         <result property="code" column="code"/>
         <result property="name" column="name"/>
@@ -31,13 +31,13 @@
         WHERE code = #{code}
     </select>
 
-    <insert id="insert" parameterType="com.backend.backend.Entity.Action"
+    <insert id="insert" parameterType="com.backend.backend.domain.mapping.entity.Action"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO action (code, name, description)
         VALUES (#{code}, #{name}, #{description})
     </insert>
 
-    <update id="update" parameterType="com.backend.backend.Entity.Action">
+    <update id="update" parameterType="com.backend.backend.domain.mapping.entity.Action">
         UPDATE action
         SET code = #{code},
             name = #{name},

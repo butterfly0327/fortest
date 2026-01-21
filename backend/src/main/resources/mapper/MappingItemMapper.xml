@@ -3,14 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.backend.backend.mapper.MappingItemMapper">
+<mapper namespace="com.backend.backend.domain.mapping.mapper.MappingItemMapper">
 
-    <resultMap id="MappingItemResultMap" type="com.backend.backend.Entity.MappingItem">
+    <resultMap id="MappingItemResultMap" type="com.backend.backend.domain.mapping.entity.MappingItem">
         <id property="id" column="id"/>
         <result property="gestureId" column="gesture_id"/>
         <result property="actionId" column="action_id"/>
         <result property="sortOrder" column="sort_order"/>
-        <association property="mapping" javaType="com.backend.backend.Entity.Mapping">
+        <association property="mapping" javaType="com.backend.backend.domain.mapping.entity.Mapping">
             <id property="id" column="mapping_id"/>
         </association>
     </resultMap>
@@ -35,13 +35,13 @@
         ORDER BY sort_order
     </select>
 
-    <insert id="insert" parameterType="com.backend.backend.Entity.MappingItem"
+    <insert id="insert" parameterType="com.backend.backend.domain.mapping.entity.MappingItem"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO mapping_item (mapping_id, gesture_id, action_id, sort_order)
         VALUES (#{mapping.id}, #{gestureId}, #{actionId}, #{sortOrder})
     </insert>
 
-    <update id="update" parameterType="com.backend.backend.Entity.MappingItem">
+    <update id="update" parameterType="com.backend.backend.domain.mapping.entity.MappingItem">
         UPDATE mapping_item
         SET mapping_id = #{mapping.id},
             gesture_id = #{gestureId},

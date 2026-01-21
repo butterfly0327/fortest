@@ -3,14 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.backend.backend.mapper.PresentationScriptMapper">
+<mapper namespace="com.backend.backend.domain.presentation.mapper.PresentationScriptMapper">
 
-    <resultMap id="PresentationScriptResultMap" type="com.backend.backend.Entity.PresentationScript">
+    <resultMap id="PresentationScriptResultMap" type="com.backend.backend.domain.presentation.entity.PresentationScript">
         <id property="id" column="id"/>
         <result property="scriptText" column="script_text"/>
         <result property="version" column="version"/>
         <result property="createdAt" column="created_at"/>
-        <association property="presentation" javaType="com.backend.backend.Entity.Presentation">
+        <association property="presentation" javaType="com.backend.backend.domain.presentation.entity.Presentation">
             <id property="id" column="presentation_id"/>
         </association>
     </resultMap>
@@ -41,13 +41,13 @@
         LIMIT 1
     </select>
 
-    <insert id="insert" parameterType="com.backend.backend.Entity.PresentationScript"
+    <insert id="insert" parameterType="com.backend.backend.domain.presentation.entity.PresentationScript"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO presentation_script (presentation_id, script_text, version, created_at)
         VALUES (#{presentation.id}, #{scriptText}, #{version}, #{createdAt})
     </insert>
 
-    <update id="update" parameterType="com.backend.backend.Entity.PresentationScript">
+    <update id="update" parameterType="com.backend.backend.domain.presentation.entity.PresentationScript">
         UPDATE presentation_script
         SET presentation_id = #{presentation.id},
             script_text = #{scriptText},
