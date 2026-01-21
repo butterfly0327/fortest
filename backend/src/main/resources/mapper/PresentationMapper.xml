@@ -3,15 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.backend.backend.mapper.PresentationMapper">
+<mapper namespace="com.backend.backend.domain.presentation.mapper.PresentationMapper">
 
-    <resultMap id="PresentationResultMap" type="com.backend.backend.Entity.Presentation">
+    <resultMap id="PresentationResultMap" type="com.backend.backend.domain.presentation.entity.Presentation">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="startedAt" column="started_at"/>
         <result property="endedAt" column="ended_at"/>
         <result property="createdAt" column="created_at"/>
-        <association property="account" javaType="com.backend.backend.Entity.Account">
+        <association property="account" javaType="com.backend.backend.domain.auth.entity.Account">
             <id property="id" column="account_id"/>
         </association>
     </resultMap>
@@ -35,13 +35,13 @@
         WHERE account_id = #{accountId}
     </select>
 
-    <insert id="insert" parameterType="com.backend.backend.Entity.Presentation"
+    <insert id="insert" parameterType="com.backend.backend.domain.presentation.entity.Presentation"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO presentation (account_id, title, started_at, ended_at, created_at)
         VALUES (#{account.id}, #{title}, #{startedAt}, #{endedAt}, #{createdAt})
     </insert>
 
-    <update id="update" parameterType="com.backend.backend.Entity.Presentation">
+    <update id="update" parameterType="com.backend.backend.domain.presentation.entity.Presentation">
         UPDATE presentation
         SET account_id = #{account.id},
             title = #{title},

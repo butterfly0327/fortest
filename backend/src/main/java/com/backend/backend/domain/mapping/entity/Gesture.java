@@ -1,4 +1,4 @@
-package com.backend.backend.entity;
+package com.backend.backend.domain.mapping.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -3,14 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.backend.backend.mapper.MappingValidationMapper">
+<mapper namespace="com.backend.backend.domain.mapping.mapper.MappingValidationMapper">
 
-    <resultMap id="MappingValidationResultMap" type="com.backend.backend.Entity.MappingValidation">
+    <resultMap id="MappingValidationResultMap" type="com.backend.backend.domain.mapping.entity.MappingValidation">
         <id property="id" column="id"/>
         <result property="isValid" column="is_valid"/>
         <result property="validationMessage" column="validation_message"/>
         <result property="checkedAt" column="checked_at"/>
-        <association property="mapping" javaType="com.backend.backend.Entity.Mapping">
+        <association property="mapping" javaType="com.backend.backend.domain.mapping.entity.Mapping">
             <id property="id" column="mapping_id"/>
         </association>
     </resultMap>
@@ -32,13 +32,13 @@
         WHERE mapping_id = #{mappingId}
     </select>
 
-    <insert id="insert" parameterType="com.backend.backend.Entity.MappingValidation"
+    <insert id="insert" parameterType="com.backend.backend.domain.mapping.entity.MappingValidation"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO mapping_validation (mapping_id, is_valid, validation_message, checked_at)
         VALUES (#{mapping.id}, #{isValid}, #{validationMessage}, #{checkedAt})
     </insert>
 
-    <update id="update" parameterType="com.backend.backend.Entity.MappingValidation">
+    <update id="update" parameterType="com.backend.backend.domain.mapping.entity.MappingValidation">
         UPDATE mapping_validation
         SET mapping_id = #{mapping.id},
             is_valid = #{isValid},
