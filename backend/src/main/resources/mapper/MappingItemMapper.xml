@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.backend.mapper.MappingItemMapper">
+
+    <resultMap id="MappingItemResultMap" type="com.backend.backend.Entity.MappingItem">
+        <id property="id" column="id"/>
+        <result property="gestureId" column="gesture_id"/>
+        <result property="actionId" column="action_id"/>
+        <result property="sortOrder" column="sort_order"/>
+        <association property="mapping" javaType="com.backend.backend.Entity.Mapping">
+            <id property="id" column="mapping_id"/>
+        </association>
+    </resultMap>
+
+
+    <select id="findAll" resultMap="MappingItemResultMap">
+        SELECT id, mapping_id, gesture_id, action_id, sort_order
+        FROM mapping_item
+    </select>
+
+
+    <select id="findById" resultMap="MappingItemResultMap">
+        SELECT id, mapping_id, gesture_id, action_id, sort_order
+        FROM mapping_item
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByMappingId" resultMap="MappingItemResultMap">
+        SELECT id, mapping_id, gesture_id, action_id, sort_order
+        FROM mapping_item
+        WHERE mapping_id = #{mappingId}
+        ORDER BY sort_order
+    </select>
+
+    <insert id="insert" parameterType="com.backend.backend.Entity.MappingItem"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO mapping_item (mapping_id, gesture_id, action_id, sort_order)
+        VALUES (#{mapping.id}, #{gestureId}, #{actionId}, #{sortOrder})
+    </insert>
+
+    <update id="update" parameterType="com.backend.backend.Entity.MappingItem">
+        UPDATE mapping_item
+        SET mapping_id = #{mapping.id},
+            gesture_id = #{gestureId},
+            action_id = #{actionId},
+            sort_order = #{sortOrder}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM mapping_item
+        WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteByMappingId">
+        DELETE FROM mapping_item
+        WHERE mapping_id = #{mappingId}
+    </delete>
+
+</mapper>

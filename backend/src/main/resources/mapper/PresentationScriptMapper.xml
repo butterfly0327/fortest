@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.backend.mapper.PresentationScriptMapper">
+
+    <resultMap id="PresentationScriptResultMap" type="com.backend.backend.Entity.PresentationScript">
+        <id property="id" column="id"/>
+        <result property="scriptText" column="script_text"/>
+        <result property="version" column="version"/>
+        <result property="createdAt" column="created_at"/>
+        <association property="presentation" javaType="com.backend.backend.Entity.Presentation">
+            <id property="id" column="presentation_id"/>
+        </association>
+    </resultMap>
+
+    <select id="findAll" resultMap="PresentationScriptResultMap">
+        SELECT id, presentation_id, script_text, version, created_at
+        FROM presentation_script
+    </select>
+
+    <select id="findById" resultMap="PresentationScriptResultMap">
+        SELECT id, presentation_id, script_text, version, created_at
+        FROM presentation_script
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByPresentationId" resultMap="PresentationScriptResultMap">
+        SELECT id, presentation_id, script_text, version, created_at
+        FROM presentation_script
+        WHERE presentation_id = #{presentationId}
+        ORDER BY version DESC
+    </select>
+
+    <select id="findLatestByPresentationId" resultMap="PresentationScriptResultMap">
+        SELECT id, presentation_id, script_text, version, created_at
+        FROM presentation_script
+        WHERE presentation_id = #{presentationId}
+        ORDER BY version DESC
+        LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="com.backend.backend.Entity.PresentationScript"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO presentation_script (presentation_id, script_text, version, created_at)
+        VALUES (#{presentation.id}, #{scriptText}, #{version}, #{createdAt})
+    </insert>
+
+    <update id="update" parameterType="com.backend.backend.Entity.PresentationScript">
+        UPDATE presentation_script
+        SET presentation_id = #{presentation.id},
+            script_text = #{scriptText},
+            version = #{version},
+            created_at = #{createdAt}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM presentation_script
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

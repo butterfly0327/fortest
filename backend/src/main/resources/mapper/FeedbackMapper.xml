@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.backend.mapper.FeedbackMapper">
+
+    <resultMap id="FeedbackResultMap" type="com.backend.backend.Entity.Feedback">
+        <id property="id" column="id"/>
+        <result property="alignmentStatus" column="alignment_status"/>
+        <result property="alignmentMatchScore" column="alignment_match_score"/>
+        <result property="alignmentErrorMessage" column="alignment_error_message"/>
+        <result property="summary" column="summary"/>
+        <result property="alignmentOmission" column="alignment_omission"/>
+        <result property="alignmentSpeed" column="alignment_speed"/>
+        <result property="alignmentPronun" column="alignment_pronun"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="finishedAt" column="finished_at"/>
+        <association property="presentation" javaType="com.backend.backend.Entity.Presentation">
+            <id property="id" column="presentation_id"/>
+        </association>
+    </resultMap>
+
+
+    <select id="findAll" resultMap="FeedbackResultMap">
+        SELECT id, presentation_id, alignment_status, alignment_match_score,
+               alignment_error_message, summary, alignment_omission,
+               alignment_speed, alignment_pronun, created_at, finished_at
+        FROM feedback
+    </select>
+
+
+    <select id="findById" resultMap="FeedbackResultMap">
+        SELECT id, presentation_id, alignment_status, alignment_match_score,
+               alignment_error_message, summary, alignment_omission,
+               alignment_speed, alignment_pronun, created_at, finished_at
+        FROM feedback
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByPresentationId" resultMap="FeedbackResultMap">
+        SELECT id, presentation_id, alignment_status, alignment_match_score,
+               alignment_error_message, summary, alignment_omission,
+               alignment_speed, alignment_pronun, created_at, finished_at
+        FROM feedback
+        WHERE presentation_id = #{presentationId}
+    </select>
+
+    <insert id="insert" parameterType="com.backend.backend.Entity.Feedback"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO feedback (presentation_id, alignment_status, alignment_match_score,
+                              alignment_error_message, summary, alignment_omission,
+                              alignment_speed, alignment_pronun, created_at, finished_at)
+        VALUES (#{presentation.id}, #{alignmentStatus}, #{alignmentMatchScore},
+                #{alignmentErrorMessage}, #{summary}, #{alignmentOmission},
+                #{alignmentSpeed}, #{alignmentPronun}, #{createdAt}, #{finishedAt})
+    </insert>
+
+    <update id="update" parameterType="com.backend.backend.Entity.Feedback">
+        UPDATE feedback
+        SET presentation_id = #{presentation.id},
+            alignment_status = #{alignmentStatus},
+            alignment_match_score = #{alignmentMatchScore},
+            alignment_error_message = #{alignmentErrorMessage},
+            summary = #{summary},
+            alignment_omission = #{alignmentOmission},
+            alignment_speed = #{alignmentSpeed},
+            alignment_pronun = #{alignmentPronun},
+            finished_at = #{finishedAt}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM feedback
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.backend.mapper.ActionMapper">
+
+    <resultMap id="ActionResultMap" type="com.backend.backend.Entity.Action">
+        <id property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+    </resultMap>
+
+
+    <select id="findAll" resultMap="ActionResultMap">
+        SELECT id, code, name, description
+        FROM action
+    </select>
+
+
+    <select id="findById" resultMap="ActionResultMap">
+        SELECT id, code, name, description
+        FROM action
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByCode" resultMap="ActionResultMap">
+        SELECT id, code, name, description
+        FROM action
+        WHERE code = #{code}
+    </select>
+
+    <insert id="insert" parameterType="com.backend.backend.Entity.Action"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO action (code, name, description)
+        VALUES (#{code}, #{name}, #{description})
+    </insert>
+
+    <update id="update" parameterType="com.backend.backend.Entity.Action">
+        UPDATE action
+        SET code = #{code},
+            name = #{name},
+            description = #{description}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM action
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

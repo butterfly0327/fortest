@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:mysql://e202-mysql-db.cxwweg8egtc4.ap-southeast-2.rds.amazonaws.com:3306/e202
+    username: "admin"
+    password: "ssafy1234"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 60s
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.backend.backend.dto
+  configuration:
+    map-underscore-to-camel-case: true

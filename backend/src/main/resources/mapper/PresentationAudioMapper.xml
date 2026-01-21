@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.backend.mapper.PresentationAudioMapper">
+
+    <resultMap id="PresentationAudioResultMap" type="com.backend.backend.Entity.PresentationAudio">
+        <id property="id" column="id"/>
+        <result property="s3Key" column="s3_key"/>
+        <result property="durationMs" column="duration_ms"/>
+        <result property="sampleRate" column="sample_rate"/>
+        <result property="createdAt" column="created_at"/>
+        <association property="presentation" javaType="com.backend.backend.Entity.Presentation">
+            <id property="id" column="presentation_id"/>
+        </association>
+    </resultMap>
+
+    <select id="findAll" resultMap="PresentationAudioResultMap">
+        SELECT id, presentation_id, s3_key, duration_ms, sample_rate, created_at
+        FROM presentation_audio
+    </select>
+
+    <select id="findById" resultMap="PresentationAudioResultMap">
+        SELECT id, presentation_id, s3_key, duration_ms, sample_rate, created_at
+        FROM presentation_audio
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByPresentationId" resultMap="PresentationAudioResultMap">
+        SELECT id, presentation_id, s3_key, duration_ms, sample_rate, created_at
+        FROM presentation_audio
+        WHERE presentation_id = #{presentationId}
+        ORDER BY created_at DESC
+    </select>
+
+    <select id="findLatestByPresentationId" resultMap="PresentationAudioResultMap">
+        SELECT id, presentation_id, s3_key, duration_ms, sample_rate, created_at
+        FROM presentation_audio
+        WHERE presentation_id = #{presentationId}
+        ORDER BY created_at DESC
+        LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="com.backend.backend.Entity.PresentationAudio"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO presentation_audio (presentation_id, s3_key, duration_ms, sample_rate, created_at)
+        VALUES (#{presentation.id}, #{s3Key}, #{durationMs}, #{sampleRate}, #{createdAt})
+    </insert>
+
+    <update id="update" parameterType="com.backend.backend.Entity.PresentationAudio">
+        UPDATE presentation_audio
+        SET presentation_id = #{presentation.id},
+            s3_key = #{s3Key},
+            duration_ms = #{durationMs},
+            sample_rate = #{sampleRate},
+            created_at = #{createdAt}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM presentation_audio
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

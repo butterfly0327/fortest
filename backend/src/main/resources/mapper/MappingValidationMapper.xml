@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.backend.mapper.MappingValidationMapper">
+
+    <resultMap id="MappingValidationResultMap" type="com.backend.backend.Entity.MappingValidation">
+        <id property="id" column="id"/>
+        <result property="isValid" column="is_valid"/>
+        <result property="validationMessage" column="validation_message"/>
+        <result property="checkedAt" column="checked_at"/>
+        <association property="mapping" javaType="com.backend.backend.Entity.Mapping">
+            <id property="id" column="mapping_id"/>
+        </association>
+    </resultMap>
+
+    <select id="findAll" resultMap="MappingValidationResultMap">
+        SELECT id, mapping_id, is_valid, validation_message, checked_at
+        FROM mapping_validation
+    </select>
+
+    <select id="findById" resultMap="MappingValidationResultMap">
+        SELECT id, mapping_id, is_valid, validation_message, checked_at
+        FROM mapping_validation
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByMappingId" resultMap="MappingValidationResultMap">
+        SELECT id, mapping_id, is_valid, validation_message, checked_at
+        FROM mapping_validation
+        WHERE mapping_id = #{mappingId}
+    </select>
+
+    <insert id="insert" parameterType="com.backend.backend.Entity.MappingValidation"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO mapping_validation (mapping_id, is_valid, validation_message, checked_at)
+        VALUES (#{mapping.id}, #{isValid}, #{validationMessage}, #{checkedAt})
+    </insert>
+
+    <update id="update" parameterType="com.backend.backend.Entity.MappingValidation">
+        UPDATE mapping_validation
+        SET mapping_id = #{mapping.id},
+            is_valid = #{isValid},
+            validation_message = #{validationMessage},
+            checked_at = #{checkedAt}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM mapping_validation
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.backend.mapper.AccountMapper">
+
+    <resultMap id="AccountResultMap" type="com.backend.backend.Entity.Account">
+        <id property="id" column="id"/>
+        <result property="email" column="email"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+
+    <select id="findAll" resultMap="AccountResultMap">
+        SELECT id, email, username, password
+        FROM account
+    </select>
+
+
+    <select id="findById" resultMap="AccountResultMap">
+        SELECT id, email, username, password
+        FROM account
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByEmail" resultMap="AccountResultMap">
+        SELECT id, email, username, password
+        FROM account
+        WHERE email = #{email}
+    </select>
+
+    <insert id="insert" parameterType="com.backend.backend.Entity.Account"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO account (email, username, password)
+        VALUES (#{email}, #{username}, #{password})
+    </insert>
+
+    <update id="update" parameterType="com.backend.backend.Entity.Account">
+        UPDATE account
+        SET email = #{email},
+            username = #{username},
+            password = #{password}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM account
+        WHERE id = #{id}
+    </delete>
+
+
+
+</mapper>
